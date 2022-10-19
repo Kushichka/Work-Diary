@@ -1,0 +1,79 @@
+
+.signUpForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.wrapper {
+    background-color: #1c87e5;
+    padding: 20px;
+}
+
+
+.formWrapper {
+    display: flex;
+    // flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.labels, .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.labels {
+    &>label {
+        padding: 5px 0;
+    }
+}
+
+.inputs {
+    &>input {
+        border: none;
+        color: #000;
+        background-color: #69b6ff;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 5px 5px 5px 5px;
+        border-radius: 2px 2px 2px 2px;
+        outline: none;
+        &:focus, &:active {
+            outline: #ff5722 solid 2px;
+        }
+    }
+}
+
+.titleWrapper {
+    padding: 15px;
+    background-color: #005bb2;
+    border-radius: 10px 10px 0 0;
+}
+
+.title {
+    text-align: center;
+}
+
+.btnSignUp {
+    width: 100%;
+    padding: 0 5px 0 5px;
+    background-color: #ff5722;
+    border: none;
+    color: #fff;
+    border-radius: 0 0 10px 10px;
+    font-size: 18px;
+    font-weight: 500;
+    transition: .1s;
+    cursor: pointer;
+    outline: none;
+    &:hover, &:focus, &:active {
+        background-color: #c41c00;
+        outline: #000 solid 0 5px 5px 5px;
+    }
+}
