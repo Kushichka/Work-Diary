@@ -4,12 +4,25 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+    font-size: 18px;
 }
 
 .accountName {
-    font-size: 18px;
     &>span {
         font-size: 20px;
         font-weight: 500;
+    }
+}
+
+.accountBtn {
+    border: none;
+    color: #fff;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: inherit;
+    transition: .1s;
+    &:hover, &:focus, &:active {
+        color: #c7c7c7;
+        outline: none;
     }
 }

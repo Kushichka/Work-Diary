@@ -1,13 +1,13 @@
 import './App.css';
+import AppRouter from './AppRouter';
 import NavBar from './components/NavBar/NavBar';
-import SignUpForm from './components/SignUpForm/SignUpForm';
 
 function App() {
 
   return (
     <div className="app">
       <NavBar />
-      <SignUpForm />
+      <AppRouter />
     </div>
   );
 }

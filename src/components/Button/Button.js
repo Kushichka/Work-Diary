@@ -1,6 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { onLogin } from '../../redux/actions';
 
-const Button = ({ name }) => {
+const Button = ({ name, event }) => {
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch(onLogin());
+    }
 
     const [isHover, setIsHover] = useState(false);
 
@@ -22,6 +31,7 @@ const Button = ({ name }) => {
                 style={style}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                onClick={(event) => handleSubmit(event)}
             >
                 {name}
             </button>
