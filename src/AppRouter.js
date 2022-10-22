@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import SignInForm from "./components/SignInForm/SignInForm";
-import SignUpForm from "./components/SignUpForm/SignUpForm";
+import SignUpPage from './pages/SignUpPage/SignUpPage';
+import SignInPage from './pages/SignInPage/SignInPage';
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 const AppRouter = () => {
 
@@ -10,17 +11,17 @@ const AppRouter = () => {
     return isLogged ? 
         (
             <Routes>
-                <Route path="/" element={<h1>Hello</h1>} />
-                <Route path="*" element={<h1>Hello</h1>} />
+                <Route path="/" element={<UserProfile />} />
+                <Route path="*" element={<UserProfile />} />
             </Routes>
         )
         :
         (
             <Routes>
-                <Route path="/" element={<SignUpForm />} />
-                <Route path="signup" element={<SignUpForm />} />
-                <Route path="signin" element={<SignInForm />} />
-                <Route path="*" element={<SignUpForm />} />
+                <Route path="/" element={<SignUpPage />} />
+                <Route path="signup" element={<SignUpPage />} />
+                <Route path="signin" element={<SignInPage />} />
+                <Route path="*" element={<SignUpPage />} />
             </Routes>
         )
 }
