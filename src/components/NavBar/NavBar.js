@@ -10,13 +10,28 @@ const NavBar = () => {
     return (
         <div className={s.navBar}>
             <Link className={s.logo} to='/'>
-                <p>Work Diary</p>    
+                <p>Work Diary</p>
             </Link>
             {isLogged &&
-                <AccountMenu />
+                <>
+                    <NavMenu />
+                    <AccountMenu />
+                </>
             }
         </div>
     );
 }
- 
+
 export default NavBar;
+
+export const NavMenu = () => {
+    return (
+        <ul className={s.navMenu}>
+            <li className={s.navItem}>
+                <Link to='/profile'>
+                    Profile
+                </Link>
+            </li>
+        </ul>
+    );
+}

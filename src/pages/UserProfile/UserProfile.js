@@ -1,7 +1,57 @@
 import NavBar from "../../components/NavBar/NavBar";
 import s from './UserProfile.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+// import { calcTotalHours } from './../../redux/actions';
 
 const UserProfile = () => {
+
+    // const dispatch = useDispatch();
+    const data = useSelector(state => state.userData);
+    // let totalHours = useSelector(state => state.totalHours);
+    // let totalOver = useSelector(state => state.totalOvertime);
+
+    const days = data.map(el => {
+
+        // dispatch(calcTotalHours, el.shiftEnd - el.shiftStart);
+
+        return (
+            el.dayOff ? (
+                <tr key={el.day}>
+                    <td className={s.colOne}>{el.day}</td>
+                    <td>Day off</td>
+                    <td className={s.colThree}>Day off</td>
+                    <td>Day off</td>
+                    <td className={s.colFive}>Day off</td>
+                    <td>Day off</td>
+                    <td className={s.colSeven}>Day off</td>
+                    {el.day === 1 && 
+                        <>
+                            <td rowSpan={5}>0</td>
+                            <td className={s.colNine} rowSpan={5}>0</td>
+                        </>
+                    }
+                </tr>
+            )
+            :
+            (
+                <tr key={el.day}>
+                    <td className={s.colOne}>{el.day}</td>
+                    <td>{el.shiftStart}</td>
+                    <td className={s.colThree}>{el.shiftEnd}</td>
+                    <td>{el.breaks[1].start}</td>
+                    <td className={s.colFive}>{el.breaks[1].end}</td>
+                    <td>{el.hours}</td>
+                    <td className={s.colSeven}>{el.overTime}</td>
+                    {el.day === 1 && 
+                        <>
+                            <td rowSpan={5}>0</td>
+                            <td className={s.colNine} rowSpan={5}>0</td>
+                        </>
+                    }
+                </tr>
+            )
+        )
+    });
 
     return (
         <>
@@ -30,48 +80,7 @@ const UserProfile = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className={s.colOne}>01</td>
-                            <td>07:00</td>
-                            <td className={s.colThree}>15:00</td>
-                            <td>10:30</td>
-                            <td className={s.colFive}>11:00</td>
-                            <td>8:00</td>
-                            <td className={s.colSeven}>0</td>
-                            <td rowSpan={5}>262:30</td>
-                            <td className={s.colNine} rowSpan={5}>5:30</td>
-                        </tr>
-                        <tr>
-                            <td className={s.colOne}>02</td>
-                            <td className={s.dayOff} colSpan={6}>Day off</td>
-                        </tr>
-                        <tr>
-                            <td className={s.colOne}>03</td>
-                            <td>07:00</td>
-                            <td className={s.colThree}>15:00</td>
-                            <td>10:30</td>
-                            <td className={s.colFive}>11:00</td>
-                            <td>7:00</td>
-                            <td className={s.colSeven}>1:00</td>
-                        </tr>
-                        <tr>
-                            <td className={s.colOne}>04</td>
-                            <td>07:00</td>
-                            <td className={s.colThree}>15:00</td>
-                            <td>10:30</td>
-                            <td className={s.colFive}>11:00</td>
-                            <td>8:00</td>
-                            <td className={s.colSeven}>0:30</td>
-                        </tr>
-                        <tr>
-                            <td className={s.colOne}>05</td>
-                            <td>07:00</td>
-                            <td className={s.colThree}>15:00</td>
-                            <td>10:30</td>
-                            <td className={s.colFive}>11:00</td>
-                            <td>7:30</td>
-                            <td className={s.colSeven}>0</td>
-                        </tr>
+                        {days}
                     </tbody>
                 </table>
             </div>

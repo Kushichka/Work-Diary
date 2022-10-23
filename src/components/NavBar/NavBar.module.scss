@@ -10,13 +10,27 @@
     padding: 0 10px 0 10px;
     color: #fff;
     box-shadow: 3px 4px 24px -12px rgba(66, 68, 90, 1);
+
+    & a {
+        transition: .1s;
+
+        &:hover, &:focus {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            color: #ff8a50;
+        }
+    }
 }
 
 .logo {
-    text-decoration: none;
-    color: #fff;
     margin-right: 10px;
+    
     &>p {
         font-size: 22px;
     }
+}
+
+.navMenu {
+    font-size: 20px;
 }
