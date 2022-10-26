@@ -1,58 +1,8 @@
 import NavBar from "../../components/NavBar/NavBar";
+import UserTable from "../../components/UserTable/UserTable";
 import s from './UserProfile.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
-// import { calcTotalHours } from './../../redux/actions';
 
 const UserProfile = () => {
-
-    // const dispatch = useDispatch();
-    const data = useSelector(state => state.userData);
-    // let totalHours = useSelector(state => state.totalHours);
-    // let totalOver = useSelector(state => state.totalOvertime);
-
-    const days = data.map(el => {
-
-        // dispatch(calcTotalHours, el.shiftEnd - el.shiftStart);
-
-        return (
-            el.dayOff ? (
-                <tr key={el.day}>
-                    <td className={s.colOne}>{el.day}</td>
-                    <td>Day off</td>
-                    <td className={s.colThree}>Day off</td>
-                    <td>Day off</td>
-                    <td className={s.colFive}>Day off</td>
-                    <td>Day off</td>
-                    <td className={s.colSeven}>Day off</td>
-                    {el.day === 1 && 
-                        <>
-                            <td rowSpan={5}>0</td>
-                            <td className={s.colNine} rowSpan={5}>0</td>
-                        </>
-                    }
-                </tr>
-            )
-            :
-            (
-                <tr key={el.day}>
-                    <td className={s.colOne}>{el.day}</td>
-                    <td>{el.shiftStart}</td>
-                    <td className={s.colThree}>{el.shiftEnd}</td>
-                    <td>{el.breaks[1].start}</td>
-                    <td className={s.colFive}>{el.breaks[1].end}</td>
-                    <td>{el.hours}</td>
-                    <td className={s.colSeven}>{el.overTime}</td>
-                    {el.day === 1 && 
-                        <>
-                            <td rowSpan={5}>0</td>
-                            <td className={s.colNine} rowSpan={5}>0</td>
-                        </>
-                    }
-                </tr>
-            )
-        )
-    });
-
     return (
         <>
             <NavBar />
@@ -80,7 +30,7 @@ const UserProfile = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {days}
+                        <UserTable />
                     </tbody>
                 </table>
             </div>
