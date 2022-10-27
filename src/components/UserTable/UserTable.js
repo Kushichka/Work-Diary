@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import s from '../../pages/UserProfile/UserProfile.module.scss';
 
@@ -5,25 +6,26 @@ const UserTable = () => {
 
     const data = useSelector(state => state.userData);
 
-    // const [totalHours, setTotalHours] = useState(0);
+    const [totalHours, setTotalHours] = useState(0);
 
-    // const calcTime = (a, b) => {
-    //     return +new Date(`2022-02-22T${b}:00`).getHours() - new Date(`2022-02-22T${a}:00`).getHours();
-    // }
+    const calcTime = (a, b) => {
+        return +new Date(`2022-02-22T${b}:00`).getHours() - new Date(`2022-02-22T${a}:00`).getHours();
+    }
 
-    // const calcHours = () => {
-    //     data.map(item => (
-    //         setTotalHours(prev => prev + calcTime(item.shiftStart, item.shiftEnd))
-    //     ));
-    // }
+    const calcHours = () => {
+        data.map(item => (
+            setTotalHours(prev => prev + calcTime(item.shiftStart, item.shiftEnd))
+        ));
+    }
 
-    // useEffect(() => {
-    //     calcHours();
-    // }, []);
+    useEffect(() => {
+        calcHours();
+    }, []);
 
     const days = data.map(el => {
         // setTotalHours(prev => prev + calcTime(el.shiftStart,el.shiftEnd));
         console.log('render');
+        console.log(totalHours);
 
         return (
             el.dayOff ? (
@@ -37,7 +39,7 @@ const UserTable = () => {
                     <td className={s.colSeven}>Day off</td>
                     {el.day === 1 &&
                         <>
-                            <td rowSpan={5}>0</td>
+                            <td rowSpan={5}>{totalHours}</td>
                             <td className={s.colNine} rowSpan={5}>0</td>
                         </>
                     }
