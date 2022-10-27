@@ -16,13 +16,23 @@ export const userData = [
     },
     {
         day: 2,
-        dayOff: true
+        dayOff: true,
+        shiftStart: '00:00',
+        shiftEnd: '00:00',
+        breaks: {
+            1: {
+                start: '00:00',
+                end: '00:00'
+            }
+        },
+        hours: 0,
+        overTime: 0,
     },
     {
         day: 3,
         dayOff: false,
         shiftStart: '07:00',
-        shiftEnd: '15:00',
+        shiftEnd: '14:00',
         breaks: {
             1: {
                 start: '10:30',
@@ -35,8 +45,8 @@ export const userData = [
     {
         day: 4,
         dayOff: false,
-        shiftStart: '07:00',
-        shiftEnd: '15:00',
+        shiftStart: '06:00',
+        shiftEnd: '14:00',
         breaks: {
             1: {
                 start: '10:30',
@@ -49,15 +59,15 @@ export const userData = [
     {
         day: 5,
         dayOff: false,
-        shiftStart: '07:00',
-        shiftEnd: '15:00',
+        shiftStart: '09:00',
+        shiftEnd: '17:30',
         breaks: {
             1: {
                 start: '10:30',
                 end: '11:00'
             }
         },
-        hours: '07:30',
+        hours: '08:30',
         overTime: 0,
     }
     // {
