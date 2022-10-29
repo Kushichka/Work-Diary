@@ -1,15 +1,15 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AccountMenu from '../AccountMenu/AccountMenu';
-import s from './NavBar.module.scss';
+import style from './NavBar.module.scss';
 
 const NavBar = () => {
 
     const isLogged = useSelector((state) => state.isLogged);
 
     return (
-        <div className={s.navBar}>
-            <Link className={s.logo} to='/'>
+        <div className={style.navBar}>
+            <Link className={style.logo} to='/'>
                 <p>Work Diary</p>
             </Link>
             {isLogged &&
@@ -26,10 +26,10 @@ export default NavBar;
 
 export const NavMenu = () => {
     return (
-        <ul className={s.navMenu}>
-            <li className={s.navItem}>
-                <Link to='/profile'>
-                    Profile
+        <ul className={style.navMenu}>
+            <li className={style.navItem}>
+                <Link to='/MyHours'>
+                    My Hours
                 </Link>
             </li>
         </ul>

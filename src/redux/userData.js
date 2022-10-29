@@ -3,72 +3,82 @@ export const userData = [
     {
         day: 1,
         dayOff: false,
-        shiftStart: '07:00',
-        shiftEnd: '15:00',
-        breaks: {
-            1: {
-                start: '10:30',
-                end: '11:00'
-            }
+        shift: {
+            start: { hour: 7, minute: 0 },
+            end: { hour: 15, minute: 0 }
         },
-        hours: 8,
-        overTime: 0,
+        breaks: [
+            {
+                start: { hour: 10, minute: 30 },
+                end: { hour: 11, minute: 0 }
+            }
+        ],
+        hours: { hour: 8, minute: 0 },
+        overtime: { hour: 0, minute: 0 }
     },
     {
         day: 2,
         dayOff: true,
-        shiftStart: '00:00',
-        shiftEnd: '00:00',
-        breaks: {
-            1: {
-                start: '00:00',
-                end: '00:00'
-            }
+        shift: {
+            start: { hour: 0, minute: 0 },
+            end: { hour: 0, minute: 0 }
         },
-        hours: 0,
-        overTime: 0,
+        breaks: [
+            {
+                start: { hour: 0, minute: 0 },
+                end: { hour: 0, minute: 0 }
+            }
+        ],
+        hours: { hour: 0, minute: 0 },
+        overtime: { hour: 0, minute: 0 }
     },
     {
         day: 3,
         dayOff: false,
-        shiftStart: '07:00',
-        shiftEnd: '14:00',
-        breaks: {
-            1: {
-                start: '10:30',
-                end: '11:00'
-            }
+        shift: {
+            start: { hour: 7, minute: 0 },
+            end: { hour: 14, minute: 0 }
         },
-        hours: 7,
-        overTime: 1,
+        breaks: [
+            {
+                start: { hour: 10, minute: 0 },
+                end: { hour: 10, minute: 30 }
+            }
+        ],
+        hours: { hour: 7, minute: 0 },
+        overtime: { hour: 1, minute: 0 }
     },
     {
         day: 4,
         dayOff: false,
-        shiftStart: '06:00',
-        shiftEnd: '14:00',
-        breaks: {
-            1: {
-                start: '10:30',
-                end: '11:00'
-            }
+        shift: {
+            start: { hour: 6, minute: 0 },
+            end: { hour: 14, minute: 0 }
         },
-        hours: 8,
-        overTime: '0:30'
+        breaks: [
+            {
+                start: { hour: 10, minute: 30 },
+                end: { hour: 11, minute: 0 }
+            }
+        ],
+        hours: { hour: 8, minute: 0 },
+        overtime: { hour: 0, minute: 30 }
     },
     {
         day: 5,
         dayOff: false,
-        shiftStart: '09:00',
-        shiftEnd: '17:30',
-        breaks: {
-            1: {
-                start: '10:30',
-                end: '11:00'
-            }
+        shift: {
+            start: { hour: 9, minute: 0 },
+            end: { hour: 17, minute: 30 }
         },
-        hours: '08:30',
-        overTime: 0,
+        breaks: [
+            {
+                start: { hour: 12, minute: 0 },
+                end: { hour: 12, minute: 30 }
+            }
+        ],
+        hours: { hour: 8, minute: 30 },
+        overtime: { hour: 0, minute: 0 }
     }
     // {
     //     hours: '262:30',

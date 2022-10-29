@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import s from './AccountMenu.module.scss';
+import style from './AccountMenu.module.scss';
 import { onLogOut } from '../../redux/actions';
 import { useSelector } from 'react-redux';
 
@@ -15,11 +15,11 @@ const AccountMenu = () => {
     
     return (
         <>
-            <div className={s.accountMenu}>
-                <p className={s.accountName}>
+            <div className={style.accountMenu}>
+                <p className={style.accountName}>
                     Hello <span>{firstName}</span>
                 </p>
-                <button className={s.accountBtn} onClick={(e) => handleSubmit(e)}>Log Out</button>
+                <button className={style.accountBtn} onClick={(e) => handleSubmit(e)}>Log Out</button>
             </div>
         </>
     );

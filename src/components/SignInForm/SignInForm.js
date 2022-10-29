@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import s from './SignInForm.module.scss'
+import style from './SignInForm.module.scss'
 import { onLogin } from '../../redux/actions';
 
 const SignInForm = () => {
@@ -13,26 +13,26 @@ const SignInForm = () => {
     }
 
     return (
-        <div className={s.signInForm}>
+        <div className={style.signInForm}>
             <form>
-                <div className={s.titleWrapper}>
-                    <p className={s.title}>Log In</p>
+                <div className={style.titleWrapper}>
+                    <p className={style.title}>Log In</p>
                 </div>
-                <div className={s.wrapper}>
-                    <div className={s.formWrapper}>
-                        <div className={s.labels}>
+                <div className={style.wrapper}>
+                    <div className={style.formWrapper}>
+                        <div className={style.labels}>
                             <label htmlFor='inputEmail'>Email:</label>
                             <label htmlFor='inputPass'>Password:</label>
                         </div>
-                        <div className={s.inputs}>
-                            <input className={s.input} type="email" id='inputEmail' />
-                            <input className={s.input} type="password" id='inputPass' />
+                        <div className={style.inputs}>
+                            <input className={style.input} type="email" id='inputEmail' />
+                            <input className={style.input} type="password" id='inputPass' />
                         </div>
                     </div>
                 </div>
-                <div className={s.btns}>
-                    <button className={s.btnSignIn} onClick={(e) => handleSubmit(e)}>Sign In</button>
-                    <Link className={s.btnSignUp} to='/signup'>
+                <div className={style.btns}>
+                    <button className={style.btnSignIn} onClick={(e) => handleSubmit(e)}>Sign In</button>
+                    <Link className={style.btnSignUp} to='/signup'>
                         <p>Sign Up</p>
                     </Link>
                 </div>
