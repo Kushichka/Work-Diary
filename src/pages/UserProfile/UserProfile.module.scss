@@ -1,15 +1,18 @@
-$borderColor: #000;
+$main: #1d87e5;
+$dark: #005bb2;
+$ligth: #69b6ff;
 
 .tableWrapper {
     display: flex;
     justify-content: center;
     font-size: 18px;
+    margin-bottom: 50px;
 }
 
 .table {
     table-layout: fixed;
     border-collapse: collapse;
-    background-color: #1d87e5;
+    background-color: $main;
     border-radius: 10px;
     color: #fff;
     box-shadow: 3px 4px 24px -12px rgba(66, 68, 90, 1);
@@ -18,28 +21,39 @@ $borderColor: #000;
         padding: 10px;
         text-align: center;
     }
-    & tbody tr:not(:last-child) {
-        border-bottom: 2px solid #005bb2;
+
+    & thead .title:not(:last-child),
+    & thead .subTitle,
+    & tfoot .title,
+    & tfoot .subTitle:not(:last-child) {
+        border-right: 1px solid $main;
     }
-    & tbody tr:last-child td:first-child {
+
+    & thead .subTitle {
+        border-top: 1px solid $main;
+    }
+
+    & tbody tr:not(:last-child) {
+        border-bottom: 2px solid $dark;
+    }
+
+    & tfoot th {
         border-bottom-left-radius: 10px;
+    }
+
+    & tfoot tr td:last-child {
+        border-bottom-right-radius: 10px;
     }
 }
 
-.titles {    
-    & th:not(:last-child), & td:not(:last-child) {
-        border-right: 1px solid #1e88e5;
-    }
-    & td, & th {
-        border-top: 1px solid #1e88e5;
-        background-color: #005bb2;
-    }
+.title, .subTitle {    
+    background-color: $dark;
 }
 
 .odd {
-    background-color: #69b6ff;
+    background-color: $ligth;
 }
 
-.colNine {
-    border-bottom-right-radius: 10px;
-}
+// .colNine {
+//     border-bottom-right-radius: 10px;
+// }

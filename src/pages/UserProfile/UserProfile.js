@@ -1,37 +1,35 @@
-import NavBar from "../../components/NavBar/NavBar";
-import UserTable from "../../components/UserTable/UserTable";
+import { TableBody, TableFoot } from "../../components/UserTable/UserTable";
 import style from './UserProfile.module.scss';
 
 const UserProfile = () => {
     return (
         <>
-            <NavBar />
             <div className={style.tableWrapper}>
                 <table className={style.table}>
                     <thead>
                         <tr>
                             <th className={style.monthTitle} colSpan={9}>September 2022</th>
                         </tr>
-                        <tr className={style.titles}>
-                            <th rowSpan={2}>Date</th>
-                            <th colSpan={2}>Working shift</th>
-                            <th colSpan={2}>Breaks</th>
-                            <th rowSpan={2}>Hours</th>
-                            <th rowSpan={2}>Overtime</th>
-                            <th colSpan={2}>Total</th>
+                        <tr>
+                            <th className={style.title} rowSpan={2}>Date</th>
+                            <th className={style.title} colSpan={2}>Working shift</th>
+                            <th className={style.title} colSpan={2}>Breaks</th>
+                            <th className={style.title} rowSpan={2}>Hours</th>
+                            <th className={style.title} rowSpan={2}>Overtime</th>
                         </tr>
-                        <tr className={style.titles}>
-                            <td>Start</td>
-                            <td>End</td>
-                            <td>Start</td>
-                            <td>End</td>
-                            <td>Hours</td>
-                            <td>Overtime</td>
+                        <tr>
+                            <td className={style.subTitle}>Start</td>
+                            <td className={style.subTitle}>End</td>
+                            <td className={style.subTitle}>Start</td>
+                            <td className={style.subTitle}>End</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <UserTable />
+                        <TableBody />
                     </tbody>
+                    <tfoot>
+                        <TableFoot />
+                    </tfoot>
                 </table>
             </div>
         </>
