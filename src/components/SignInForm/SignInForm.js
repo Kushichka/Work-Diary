@@ -10,7 +10,7 @@ const SignInForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(onLogin());
-    }
+   }
 
     return (
         <div className={style.signInForm}>
