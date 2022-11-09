@@ -90,6 +90,9 @@
         background-color: #ff8a50;
         outline: #000 solid 0 5px 5px 5px;
     }
+    &:disabled {
+        background-color: #ff8a50da;
+    }
 }
 
 .btnSignIn {

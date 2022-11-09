@@ -9,9 +9,7 @@ export const createNewUser = async (user) => {
             email: user.email,
             pass: user.pass
         });
-
         console.log("Document written with ID: ", docRef.id);
-        return true;
     } catch (e) {
         console.error("Error adding document: ", e);
     }

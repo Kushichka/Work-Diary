@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AccountMenu from '../AccountMenu/AccountMenu';
-import PopUpMsg from '../popUpMsg/PopUpMsg';
 import style from './NavBar.module.scss';
 
 const NavBar = () => {
@@ -21,7 +20,6 @@ const NavBar = () => {
                     </>
                 }
             </div>
-            <PopUpMsg />
         </div>
     );
 }

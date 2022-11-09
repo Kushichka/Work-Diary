@@ -9,5 +9,4 @@ export const initialState = {
     totalHours: 0,
     totalOvertime: 0,
     userData
-
 }

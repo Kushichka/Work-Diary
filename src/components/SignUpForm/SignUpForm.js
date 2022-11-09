@@ -1,32 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { createNewUser } from '../../firebase/firebaseSignUp';
 import style from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    return (
-        <div className={style.signUpForm}>
-            <form>
-                <div className={style.titleWrapper}>
-                    <p className={style.title}>Create Account</p>
-                </div>
-                <SignUpInputs />
-                <div className={style.btns}>
-                    <button className={style.btnSignUp} onClick={(e) => handleSubmit(e)}>Sign Up</button>
-                    <Link className={style.btnSignIn} to='/signin'>
-                        <p>Sign In</p>
-                    </Link>
-                </div>
-            </form>
-        </div>
-    );
-}
-
-export const SignUpInputs = () => {
+    const [formValid, setFormValid] = useState(false);
 
     const [formData, setFormData] = useState({
         firstName: '', // min - 3, max - 24
@@ -36,13 +15,51 @@ export const SignUpInputs = () => {
         rePass: '' // min - 6, max - 30
     });
 
-    const [validData, setValidData] = useState({
-        firstName: false,
-        lastName: false,
-        email: false,
-        pass: false,
-        rePass: false
-    });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if(formValid) {
+            createNewUser(formData);
+        }
+        setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            pass: '',
+            rePass: ''
+        });
+    }
+
+    return (
+        <div className={style.signUpForm}>
+            <form>
+                <div className={style.titleWrapper}>
+                    <p className={style.title}>Create Account</p>
+                </div>
+                <SignUpInputs 
+                    formData={formData} 
+                    setFormData={setFormData}
+                    setFormValid={setFormValid}
+                />
+                <div className={style.btns}>
+                    <button 
+                        className={style.btnSignUp} 
+                        onClick={(e) => handleSubmit(e)}
+                        type='submit'
+                        disabled={!formValid}
+                    >
+                        Sign Up
+                    </button>
+                    <Link className={style.btnSignIn} to='/signin'>
+                        <p>Sign In</p>
+                    </Link>
+                </div>
+            </form>
+        </div>
+    );
+}
+
+export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
 
     const [dirtyData, setDirtyData] = useState({
         firstName: false,
@@ -119,6 +136,11 @@ export const SignUpInputs = () => {
                 break;
         }
     }
+
+    useEffect(() => {
+        errors.firstName || errors.lastName || errors.email || errors.pass || errors.rePass ?
+            setFormValid(false) : setFormValid(true);
+    }, [errors]);
 
     return (
         <div className={style.wrapper}>
