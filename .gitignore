@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-UserProfile copy.js
 
 # testing
 /coverage
@@ -22,3 +21,4 @@ UserProfile copy.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+firebase-debug.log*

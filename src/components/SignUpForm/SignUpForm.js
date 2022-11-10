@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createNewUser } from '../../firebase/firebaseSignUp';
 import style from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
 
     const [formValid, setFormValid] = useState(false);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         firstName: '', // min - 3, max - 24
@@ -15,12 +16,19 @@ export const SignUpForm = () => {
         rePass: '' // min - 6, max - 30
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if(formValid) {
-            createNewUser(formData);
+            const res = await createNewUser(formData);
+            if(!res) {
+                navigate('/signin');
+            } else {
+                setFormValid(false);
+                console.log(res);
+            }
         }
+
         setFormData({
             firstName: '',
             lastName: '',
