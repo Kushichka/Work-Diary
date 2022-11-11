@@ -19,22 +19,13 @@ const SignInForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await getUser(formData);
-        res ? dispatch(onLogin()) : console.log('wrong data');
+        const [accExist, data] = await getUser(formData);
+        accExist ? dispatch(onLogin()) : console.log('wrong data');
         setFormData({ email: '', pass: '' });        
     }
 
     const blurHandler = (e) => {
-        switch (e.target.name) {
-            case 'email':
-                setDirtyData({...dirtyData, email: true});
-                break;
-            case 'pass':
-                setDirtyData({...dirtyData, pass: true});
-                break;
-            default:
-                break;
-        }
+        setDirtyData({...dirtyData, [e.target.name]: true});
     }
 
     const emailHandler = (value) => {

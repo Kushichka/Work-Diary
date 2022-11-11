@@ -18,7 +18,8 @@ export const createNewUser = async (user) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                    pass: user.pass
+                    pass: user.pass,
+                    status: 'user'
                 });
                 console.log("Document written with ID: ", docRef.id);
             } catch (error) {

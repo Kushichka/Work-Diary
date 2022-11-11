@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createNewUser } from '../../firebase/firebaseSignUp';
+import { formInputHandler } from '../../utils/formInputHandler';
 import style from './SignUpForm.module.scss';
 
 export const SignUpForm = () => {
@@ -20,12 +21,12 @@ export const SignUpForm = () => {
         e.preventDefault();
 
         if(formValid) {
-            const res = await createNewUser(formData);
-            if(!res) {
+            const accExist = await createNewUser(formData);
+            if(!accExist) {
                 navigate('/signin');
             } else {
                 setFormValid(false);
-                console.log(res);
+                console.log(accExist);
             }
         }
 
@@ -85,70 +86,34 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
         rePass: 'Field cannot be empty!'
     })
 
-    const handleFirstName = (value) => {
-        setFormData({ ...formData, firstName: value });
-        if(value.length < 3 || value.length > 24) {
-            setErrors({...errors, firstName: 'Wrong length! (3 - 24)'});
-            if(!value) setErrors({...errors, firstName: 'Field cannot be empty!'});
-        } else setErrors({...errors, firstName: ''});
-    }
-    const handleLastName = (value) => {
-        setFormData({ ...formData, lastName: value });
-        if(value.length < 3 || value.length > 24) {
-            setErrors({...errors, lastName: 'Wrong length! (3 - 24)'});
-            if(!value) setErrors({...errors, lastName: 'Field cannot be empty!'});
-        } else setErrors({...errors, lastName: ''});
-    }
+    const inputHandle = (e) => {
+        let error = '';
+
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+        if(e.target.name !== 'rePass') {
+            error = formInputHandler(e);
+        } else error = formInputHandler(e, formData.pass);
         
-    const handleEmail = (value) => {
-        setFormData({ ...formData, email: value });
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(String(value).toLowerCase())) {
-            setErrors({...errors, email: 'Wrong email format!'});
-            if(!value) setErrors({...errors, email: 'Field cannot be empty!'});
-        } else setErrors({...errors, email: ''});
-    }
-    const handlePass = (value) => {
-        setFormData({ ...formData, pass: value });
-        if(value.length < 6 || value.length > 30) {
-            setErrors({...errors, pass: 'Wrong length! (3 - 24)'});
-            if(!value) setErrors({...errors, pass: 'Field cannot be empty!'});
-        } else setErrors({...errors, pass: ''});
-    }
-    const handleRePass = (value) => {
-        setFormData({ ...formData, rePass: value });
-        if(value !== formData.pass) {
-            setErrors({...errors, rePass: 'Passwords do not match'});
-            if(!value) setErrors({...errors, rePass: 'Field cannot be empty!'});
-        } else setErrors({...errors, rePass: ''});
+        setErrors({...errors, [e.target.name]: error});
     }
 
     const blurHandler = (e) => {
-        switch (e.target.name) {
-            case 'firstName':
-                setDirtyData({...dirtyData, firstName: true});
-                break;
-            case 'lastName':
-                setDirtyData({...dirtyData, lastName: true});
-                break;
-            case 'email':
-                setDirtyData({...dirtyData, email: true});
-                break;
-            case 'pass':
-                setDirtyData({...dirtyData, pass: true});
-                break;
-            case 'rePass':
-                setDirtyData({...dirtyData, rePass: true});
-                break;
-            default:
-                break;
-        }
+        setDirtyData({...dirtyData, [e.target.name]: true});
     }
 
     useEffect(() => {
         errors.firstName || errors.lastName || errors.email || errors.pass || errors.rePass ?
             setFormValid(false) : setFormValid(true);
     }, [errors]);
+
+    useEffect(() => {
+        if (formData.pass !== formData.rePass) {
+            setErrors({...errors, rePass: 'Passwords do not match'});
+        } else setErrors({...errors, rePass: ''});
+    }, [formData.pass]);
+
+    
 
     return (
         <div className={style.wrapper}>
@@ -160,7 +125,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
                         className={style.input}
                         value={formData.firstName}
                         onBlur={e => blurHandler(e)}
-                        onChange={e => handleFirstName(e.target.value)}
+                        onChange={e => inputHandle(e)}
                         type="text"
                         id='firstName'
                         name='firstName'
@@ -173,7 +138,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
                         className={style.input}
                         value={formData.lastName}
                         onBlur={e => blurHandler(e)}
-                        onChange={e => handleLastName(e.target.value)}
+                        onChange={e => inputHandle(e)}
                         type="text"
                         id='lastName'
                         name='lastName'
@@ -186,7 +151,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
                         className={style.input}
                         value={formData.email}
                         onBlur={e => blurHandler(e)}
-                        onChange={e => handleEmail(e.target.value)}
+                        onChange={e => inputHandle(e)}
                         type="email"
                         id='email'
                         name='email'
@@ -199,7 +164,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
                         className={style.input}
                         value={formData.pass}
                         onBlur={e => blurHandler(e)}
-                        onChange={e => handlePass(e.target.value)}
+                        onChange={e => inputHandle(e)}
                         type="password"
                         id='pass'
                         name='pass'
@@ -212,7 +177,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
                         className={style.input}
                         value={formData.rePass}
                         onBlur={e => blurHandler(e)}
-                        onChange={e => handleRePass(e.target.value)}
+                        onChange={e => inputHandle(e)}
                         type="password"
                         id='rePass'
                         name='rePass'
