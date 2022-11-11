@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './SignInForm.module.scss'
 import { onLogin } from '../../redux/actions';
 import { getUser } from '../../firebase/firebaseSignIn';
+import { formInputHandler } from '../../utils/formInputHandler';
 
 const SignInForm = () => {
 
@@ -16,6 +17,10 @@ const SignInForm = () => {
         email: 'Field cannot be empty!',
         pass: 'Field cannot be empty!'
     })
+    const inputStaticValues = [
+        {title: 'Email:', codeTitle: 'email', type: 'email'},
+        {title: 'Password:', codeTitle: 'pass', type: 'password'}
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,21 +33,28 @@ const SignInForm = () => {
         setDirtyData({...dirtyData, [e.target.name]: true});
     }
 
-    const emailHandler = (value) => {
-        setFormData({...formData, email: value});
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(String(value).toLowerCase())) {
-            setErrors({...errors, email: 'Wrong email format!'});
-            if(!value) setErrors({...errors, email: 'Field cannot be empty!'});
-        } else setErrors({...errors, email: ''});
+    const inputHandler = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setErrors({...errors, [e.target.name]: formInputHandler(e)});
     }
-    const passHandler = (value) => {
-        setFormData({...formData, pass: value});
-        if(value.length < 6 || value.length > 30) {
-            setErrors({...errors, pass: 'Wrong length! (3 - 24)'});
-            if(!value) setErrors({...errors, pass: 'Field cannot be empty!'});
-        } else setErrors({...errors, pass: ''});
-    }
+
+    const inputs = inputStaticValues.map(item => (
+        <Fragment key={item.codeTitle}>
+            <label htmlFor={item.codeTitle}>{item.title}</label>
+            <div className={style.inputWrapper}>
+                {(dirtyData[item.codeTitle] && errors[item.codeTitle]) && <div className={style.error}>{errors[item.codeTitle]}</div>}
+                <input
+                    className={style.input}
+                    type={item.type}
+                    id={item.codeTitle}
+                    name={item.codeTitle}
+                    value={formData[item.codeTitle]}
+                    onBlur={e => blurHandler(e)}
+                    onChange={e => inputHandler(e)}
+                />
+            </div>
+        </Fragment>
+    ));
 
     useEffect(() => {
         errors.email || errors.pass ?
@@ -57,32 +69,7 @@ const SignInForm = () => {
                 </div>
                 <div className={style.wrapper}>
                     <div className={style.formWrapper}>
-                        <label htmlFor='email'>Email:</label>
-                        <div className={style.inputWrapper}>
-                            {(dirtyData.email && errors.email) && <div className={style.error}>{errors.email}</div>}
-                            <input 
-                                className={style.input} 
-                                type="email" 
-                                id='email' 
-                                name='email'
-                                value={formData.email}
-                                onBlur={e => blurHandler(e)}
-                                onChange={e => emailHandler(e.target.value)}
-                            />
-                        </div>
-                        <label htmlFor='pass'>Password:</label>
-                        <div className={style.inputWrapper}>
-                            {(dirtyData.pass && errors.pass) && <div className={style.error}>{errors.pass}</div>}
-                            <input 
-                                className={style.input} 
-                                type="password" 
-                                id='pass' 
-                                name='pass'
-                                value={formData.pass}
-                                onBlur={e => blurHandler(e)}
-                                onChange={e => passHandler(e.target.value)}
-                            />
-                        </div>
+                        {inputs}
                     </div>
                 </div>
                 <div className={style.btns}>

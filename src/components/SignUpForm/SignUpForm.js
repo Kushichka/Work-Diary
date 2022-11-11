@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createNewUser } from '../../firebase/firebaseSignUp';
 import { formInputHandler } from '../../utils/formInputHandler';
@@ -86,7 +86,7 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
         rePass: 'Field cannot be empty!'
     })
 
-    const inputHandle = (e) => {
+    const inputHandler = (e) => {
         let error = '';
 
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -108,81 +108,43 @@ export const SignUpInputs = ({formData, setFormData, setFormValid}) => {
     }, [errors]);
 
     useEffect(() => {
-        if (formData.pass !== formData.rePass) {
+        if ((formData.pass !== formData.rePass) && dirtyData.rePass) {
             setErrors({...errors, rePass: 'Passwords do not match'});
-        } else setErrors({...errors, rePass: ''});
+        } else if ((formData.pass === formData.rePass) && dirtyData.rePass) {
+            setErrors({...errors, rePass: ''});
+        }
     }, [formData.pass]);
 
-    
+    const inputStaticValues = [
+        {title: 'First Name:', codeTitle: 'firstName', type: 'text'},
+        {title: 'Last Name:', codeTitle: 'lastName', type: 'text'},
+        {title: 'Email:', codeTitle: 'email', type: 'email'},
+        {title: 'Password:', codeTitle: 'pass', type: 'password'},
+        {title: 'Repeat password:', codeTitle: 'rePass', type: 'password'}
+    ];
+
+    const inputs = inputStaticValues.map(item => (
+        <Fragment key={item.codeTitle}>
+            <label htmlFor={item.codeTitle}>{item.title}</label>
+            <div className={style.inputWrapper}>
+                {(dirtyData[item.codeTitle] && errors[item.codeTitle]) && <div className={style.error}>{errors[item.codeTitle]}</div>}
+                <input
+                    className={style.input}
+                    value= {formData[item.codeTitle]}
+                    onBlur={e => blurHandler(e)}
+                    onChange={e => inputHandler(e)}
+                    type={item.type}
+                    id={item.codeTitle}
+                    name={item.codeTitle}
+                />
+            </div>
+        </Fragment>
+    ));
 
     return (
         <div className={style.wrapper}>
             <div className={style.formWrapper}>
-                <label htmlFor='firstName'>First Name:</label>
-                <div className={style.inputWrapper}>
-                    {(dirtyData.firstName && errors.firstName) && <div className={style.error}>{errors.firstName}</div>}
-                    <input
-                        className={style.input}
-                        value={formData.firstName}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => inputHandle(e)}
-                        type="text"
-                        id='firstName'
-                        name='firstName'
-                    />
-                </div>
-                <label htmlFor='lastName'>Last Name:</label>
-                <div className={style.inputWrapper}>
-                    {(dirtyData.lastName && errors.lastName) && <div className={style.error}>{errors.lastName}</div>}
-                    <input
-                        className={style.input}
-                        value={formData.lastName}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => inputHandle(e)}
-                        type="text"
-                        id='lastName'
-                        name='lastName'
-                    />
-                </div>
-                <label htmlFor='email'>Email:</label>
-                <div className={style.inputWrapper}>
-                    {(dirtyData.email && errors.email) && <div className={style.error}>{errors.email}</div>}
-                    <input
-                        className={style.input}
-                        value={formData.email}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => inputHandle(e)}
-                        type="email"
-                        id='email'
-                        name='email'
-                    />
-                </div>
-                <label htmlFor='pass'>Password:</label>
-                <div className={style.inputWrapper}>
-                    {(dirtyData.pass && errors.pass) && <div className={style.error}>{errors.pass}</div>}
-                    <input
-                        className={style.input}
-                        value={formData.pass}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => inputHandle(e)}
-                        type="password"
-                        id='pass'
-                        name='pass'
-                    />
-                </div>
-                <label htmlFor='rePass'>Repeat password:</label>
-                <div className={style.inputWrapper}>
-                    {(dirtyData.rePass && errors.rePass) && <div className={style.error}>{errors.rePass}</div>}
-                    <input
-                        className={style.input}
-                        value={formData.rePass}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => inputHandle(e)}
-                        type="password"
-                        id='rePass'
-                        name='rePass'
-                    />
-                </div>
+                {inputs}
             </div>
         </div>
     )
