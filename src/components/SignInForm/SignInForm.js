@@ -2,9 +2,11 @@ import { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './SignInForm.module.scss'
-import { onLogin } from '../../redux/actions';
+import { onLogin, changeUserData, changeFirstName, changeLastName,changeEmail, changeRole } from '../../redux/actions';
 import { getUser } from '../../firebase/firebaseSignIn';
+// import { addWorkData } from '../../firebase/addWorkData';
 import { formInputHandler } from '../../utils/formInputHandler';
+import { getTimes } from '../../firebase/getTimes';
 
 const SignInForm = () => {
 
@@ -24,10 +26,33 @@ const SignInForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const [accExist, data] = await getUser(formData);
-        accExist ? dispatch(onLogin()) : console.log('wrong data');
-        setFormData({ email: '', pass: '' });        
+        // addWorkData();
+        const {accExist, userData, userID} = await getUser(formData);
+        accExist ? userLogin(userData, userID) : console.log('wrong data');
+        setFormData({ email: '', pass: '' });     
     }
+
+    const userLogin = async (data, id) => {
+        dispatch(onLogin());
+        dispatch(changeFirstName(data.firstName));
+        dispatch(changeLastName(data.lastName));
+        dispatch(changeEmail(data.email));
+        dispatch(changeRole(data.role));
+        console.log(`My ID: ${id}`);
+
+        const user = await getTimes(id);
+        const userdata = Object.keys(user).map(userId => (
+            {
+                    date: user[userId].date,
+                    dayOff: user[userId].dayOff,
+                    shift: user[userId].shift,
+                    breaks: user[userId].breaks,
+                    hours: user[userId].hours,
+                    overtime: user[userId].overtime
+            }
+        ));
+        dispatch(changeUserData(userdata));
+    } 
 
     const blurHandler = (e) => {
         setDirtyData({...dirtyData, [e.target.name]: true});

@@ -27,6 +27,43 @@ export const reducer = (state=initialState, action) => {
                 ...state,
                 totalOvertime: action.payload
             }
+        case 'CHANGE_USER_DATA': 
+            return {
+                ...state,
+                userData: action.payload
+            }
+        case 'CHANGE_FIRST_NAME': 
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    firstName: action.payload
+                }
+            }
+        case 'CHANGE_LAST_NAME': 
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    lastName: action.payload
+                }
+            }
+        case 'CHANGE_EMAIL': 
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    email: action.payload
+                }
+            }
+        case 'CHANGE_ROLE': 
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    role: action.payload
+                }
+            }
         default:
             return state
     }

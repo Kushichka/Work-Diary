@@ -1,12 +1,14 @@
-import { userData } from "./userData";
 
 export const initialState = {
     isLogged: false,
     isLoaded: false,
-    firstName: '',
-    lastName: '',
-    email: '',
+    userInfo: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        role: ''
+    },
     totalHours: 0,
     totalOvertime: 0,
-    userData
+    userData: []
 }

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const AccountMenu = () => {
 
     const dispatch = useDispatch();
-    const firstName = useSelector(state => state.firstName);
+    const firstName = useSelector(state => state.userInfo.firstName);
 
     const handleSubmit = (e) => {
         e.preventDefault();

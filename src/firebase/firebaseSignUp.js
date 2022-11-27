@@ -1,4 +1,5 @@
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { addWorkData } from "./addWorkData";
 import { db } from "./firebase";
 
 export const createNewUser = async (user) => {
@@ -19,8 +20,14 @@ export const createNewUser = async (user) => {
                     lastName: user.lastName,
                     email: user.email,
                     pass: user.pass,
-                    status: 'user'
+                    role: 'user'
                 });
+
+                const querry = await getDocs(req);
+                querry.forEach((doc) => {
+                    addWorkData(doc.id);
+                });
+
                 console.log("Document written with ID: ", docRef.id);
             } catch (error) {
                 console.error("Error adding document: ", error);
